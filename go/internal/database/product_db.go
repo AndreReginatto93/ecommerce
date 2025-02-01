@@ -10,12 +10,12 @@ type ProductDB struct {
 	db *sql.DB
 }
 
-func NewProduct(db *sql.DB) *ProductDB {
+func NewProductDB(db *sql.DB) *ProductDB {
 	return &ProductDB{db: db}
 }
 
 func (cd *ProductDB) GetProducts() ([]*entity.Product, error) {
-	rows, err := cd.db.Query("select id, name, price, category_id, image_url from products")
+	rows, err := cd.db.Query("select id, name, description, price, category_id, image_url from products")
 
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func (cd *ProductDB) GetProducts() ([]*entity.Product, error) {
 
 	for rows.Next() {
 		var product entity.Product
-		if err := rows.Scan(&product.Id, &product.Name, &product.Price, &product.CategoryId, &product.ImageUrl); err != nil {
+		if err := rows.Scan(&product.Id, &product.Name, &product.Description, &product.Price, &product.CategoryId, &product.ImageUrl); err != nil {
 			return nil, err
 		}
 		products = append(products, &product)
@@ -35,8 +35,8 @@ func (cd *ProductDB) GetProducts() ([]*entity.Product, error) {
 }
 
 func (cd *ProductDB) CreateProduct(product *entity.Product) (string, error) {
-	_, err := cd.db.Exec("INSERT INTO products (id, name, price, category_id, image_url) VALUES (?, ?, ?, ?, ?)",
-		product.Id, product.Name, product.Price, product.CategoryId, product.ImageUrl)
+	_, err := cd.db.Exec("INSERT INTO products (id, name, description, price, category_id, image_url) VALUES (?, ?, ?, ?, ?, ?)",
+		product.Id, product.Name, product.Description, product.Price, product.CategoryId, product.ImageUrl)
 	if err != nil {
 		return "", err
 	}
@@ -46,8 +46,8 @@ func (cd *ProductDB) CreateProduct(product *entity.Product) (string, error) {
 
 func (cd *ProductDB) GetProduct(id string) (*entity.Product, error) {
 	var product entity.Product
-	err := cd.db.QueryRow("Select id, name, price, category_id, image_url from products where id = ?", id).
-		Scan(&product.Id, &product.Name, &product.Price, &product.CategoryId, &product.ImageUrl)
+	err := cd.db.QueryRow("Select id, name, description, price, category_id, image_url from products where id = ?", id).
+		Scan(&product.Id, &product.Name, &product.Description, &product.Price, &product.CategoryId, &product.ImageUrl)
 
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (cd *ProductDB) GetProduct(id string) (*entity.Product, error) {
 }
 
 func (cd *ProductDB) GetProductByCategoryId(categoryId string) ([]*entity.Product, error) {
-	rows, err := cd.db.Query("Select id, name, price, category_id, image_url from products where category_id = ?", categoryId)
+	rows, err := cd.db.Query("Select id, name, description, price, category_id, image_url from products where category_id = ?", categoryId)
 
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (cd *ProductDB) GetProductByCategoryId(categoryId string) ([]*entity.Produc
 
 	for rows.Next() {
 		var product entity.Product
-		if err := rows.Scan(&product.Id, &product.Name, &product.Price, &product.CategoryId, &product.ImageUrl); err != nil {
+		if err := rows.Scan(&product.Id, &product.Name, &product.Description, &product.Price, &product.CategoryId, &product.ImageUrl); err != nil {
 			return nil, err
 		}
 		products = append(products, &product)

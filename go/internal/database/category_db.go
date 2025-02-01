@@ -26,7 +26,7 @@ func (cd *CategoryDB) GetCategories() ([]*entity.Category, error) {
 
 	for rows.Next() {
 		var category entity.Category
-		if err := rows.Scan(&category.Id, category.Name); err != nil {
+		if err := rows.Scan(&category.Id, &category.Name); err != nil {
 			return nil, err
 		}
 		categories = append(categories, &category)
