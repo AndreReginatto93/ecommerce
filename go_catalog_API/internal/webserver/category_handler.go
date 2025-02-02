@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/andrereginatto93/ecommerce/goapi/internal/entity"
-	"github.com/andrereginatto93/ecommerce/goapi/internal/service"
+	"github.com/devfullcycle/imersao17/goapi/internal/entity"
+	"github.com/devfullcycle/imersao17/goapi/internal/service"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -23,7 +23,6 @@ func (wch *WebCategoryHandler) GetCategories(w http.ResponseWriter, r *http.Requ
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	json.NewEncoder(w).Encode(categories)
 }
 
@@ -38,7 +37,6 @@ func (wch *WebCategoryHandler) GetCategory(w http.ResponseWriter, r *http.Reques
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	json.NewEncoder(w).Encode(category)
 }
 
@@ -49,13 +47,10 @@ func (wch *WebCategoryHandler) CreateCategory(w http.ResponseWriter, r *http.Req
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	result, err := wch.CategoryService.CreateCategory(category.Name)
-
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
 	json.NewEncoder(w).Encode(result)
 }

@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/andrereginatto93/ecommerce/goapi/internal/database"
-	"github.com/andrereginatto93/ecommerce/goapi/internal/entity"
+	"github.com/devfullcycle/imersao17/goapi/internal/database"
+	"github.com/devfullcycle/imersao17/goapi/internal/entity"
 )
 
 type CategoryService struct {
@@ -18,28 +18,22 @@ func (cs *CategoryService) GetCategories() ([]*entity.Category, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return categories, nil
 }
 
 func (cs *CategoryService) CreateCategory(name string) (*entity.Category, error) {
 	category := entity.NewCategory(name)
-
 	_, err := cs.CategoryDB.CreateCategory(category)
-
 	if err != nil {
 		return nil, err
 	}
-
 	return category, nil
 }
 
-func (cd *CategoryService) GetCategory(id string) (*entity.Category, error) {
-	category, err := cd.CategoryDB.GetCategory(id)
-
+func (cs *CategoryService) GetCategory(id string) (*entity.Category, error) {
+	category, err := cs.CategoryDB.GetCategory(id)
 	if err != nil {
 		return nil, err
 	}
-
 	return category, nil
 }

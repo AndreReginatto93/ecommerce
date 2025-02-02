@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/andrereginatto93/ecommerce/goapi/internal/database"
-	"github.com/andrereginatto93/ecommerce/goapi/internal/entity"
+	"github.com/devfullcycle/imersao17/goapi/internal/database"
+	"github.com/devfullcycle/imersao17/goapi/internal/entity"
 )
 
 type ProductService struct {
@@ -13,43 +13,35 @@ func NewProductService(productDB database.ProductDB) *ProductService {
 	return &ProductService{ProductDB: productDB}
 }
 
-func (cs *ProductService) GetProducts() ([]*entity.Product, error) {
-	products, err := cs.ProductDB.GetProducts()
+func (ps *ProductService) GetProducts() ([]*entity.Product, error) {
+	products, err := ps.ProductDB.GetProducts()
 	if err != nil {
 		return nil, err
 	}
-
 	return products, nil
 }
 
-func (cs *ProductService) CreateProduct(name, description string, price float64, categoryId, imageUrl string) (*entity.Product, error) {
-	product := entity.NewProduct(name, description, price, categoryId, imageUrl)
-
-	_, err := cs.ProductDB.CreateProduct(product)
-
+func (ps *ProductService) GetProduct(id string) (*entity.Product, error) {
+	product, err := ps.ProductDB.GetProduct(id)
 	if err != nil {
 		return nil, err
 	}
-
 	return product, nil
 }
 
-func (cd *ProductService) GetProduct(id string) (*entity.Product, error) {
-	product, err := cd.ProductDB.GetProduct(id)
-
+func (ps *ProductService) GetProductByCategoryID(categoryID string) ([]*entity.Product, error) {
+	products, err := ps.ProductDB.GetProductByCategoryID(categoryID)
 	if err != nil {
 		return nil, err
 	}
-
-	return product, nil
-}
-
-func (cd *ProductService) GetProductByCategory(categoryId string) ([]*entity.Product, error) {
-	products, err := cd.ProductDB.GetProductByCategoryId(categoryId)
-
-	if err != nil {
-		return nil, err
-	}
-
 	return products, nil
+}
+
+func (ps *ProductService) CreateProduct(name, description, category_id, image_url string, price float64) (*entity.Product, error) {
+	product := entity.NewProduct(name, description, category_id, image_url, price)
+	_, err := ps.ProductDB.CreateProduct(product)
+	if err != nil {
+		return nil, err
+	}
+	return product, nil
 }

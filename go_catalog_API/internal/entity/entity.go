@@ -3,33 +3,33 @@ package entity
 import "github.com/google/uuid"
 
 type Category struct {
-	Id   string `json:"id"`
+	ID   string `json:"id"`
 	Name string `json:"name"`
 }
 
 func NewCategory(name string) *Category {
 	return &Category{
-		Id:   uuid.New().String(),
+		ID:   uuid.New().String(),
 		Name: name,
 	}
 }
 
 type Product struct {
-	Id          string  `json:"id"`
+	ID          string  `json:"id"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
-	CategoryId  string  `json:"category_id"`
-	ImageUrl    string  `json:"image_url"`
+	CategoryID  string  `json:"category_id"`
+	ImageURL    string  `json:"image_url"`
 }
 
-func NewProduct(name, description string, price float64, categoryId, imageUrl string) *Product {
+func NewProduct(name, description, categoryID, imageURL string, price float64) *Product {
 	return &Product{
-		Id:          uuid.New().String(),
+		ID:          uuid.New().String(),
 		Name:        name,
 		Description: description,
 		Price:       price,
-		CategoryId:  categoryId,
-		ImageUrl:    imageUrl,
+		CategoryID:  categoryID,
+		ImageURL:    imageURL,
 	}
 }

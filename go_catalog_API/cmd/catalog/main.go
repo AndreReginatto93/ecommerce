@@ -5,26 +5,25 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/andrereginatto93/ecommerce/goapi/internal/database"
-	"github.com/andrereginatto93/ecommerce/goapi/internal/service"
-	"github.com/andrereginatto93/ecommerce/goapi/internal/webserver"
+	"github.com/devfullcycle/imersao17/goapi/internal/database"
+	"github.com/devfullcycle/imersao17/goapi/internal/service"
+	"github.com/devfullcycle/imersao17/goapi/internal/webserver"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/ecommerce")
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/imersao17")
 	if err != nil {
 		panic(err.Error())
 	}
-
 	defer db.Close()
 
 	categoryDB := database.NewCategoryDB(db)
-	productDB := database.NewProductDB(db)
-
 	categoryService := service.NewCategoryService(*categoryDB)
+
+	productDB := database.NewProductDB(db)
 	productService := service.NewProductService(*productDB)
 
 	webCategoryHandler := webserver.NewWebCategoryHandler(categoryService)
@@ -33,14 +32,13 @@ func main() {
 	c := chi.NewRouter()
 	c.Use(middleware.Logger)
 	c.Use(middleware.Recoverer)
-
-	c.Get("/category", webCategoryHandler.GetCategories)
 	c.Get("/category/{id}", webCategoryHandler.GetCategory)
+	c.Get("/category", webCategoryHandler.GetCategories)
 	c.Post("/category", webCategoryHandler.CreateCategory)
 
-	c.Get("/product", webProductHandler.GetProducts)
 	c.Get("/product/{id}", webProductHandler.GetProduct)
-	c.Get("/product/category/{categoryId}", webProductHandler.GetProductsByCategory)
+	c.Get("/product", webProductHandler.GetProducts)
+	c.Get("/product/category/{categoryID}", webProductHandler.GetProductByCategoryID)
 	c.Post("/product", webProductHandler.CreateProduct)
 
 	fmt.Println("Server is running on port 8080")
