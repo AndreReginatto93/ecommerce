@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,21 +34,19 @@ export class OrdersService {
           (product) => product.id === item.product_id,
         );
         return {
-          price: product!.price,
+          price: product.price,
           product_id: item.product_id,
           quantity: item.quantity,
         };
       }),
     });
     await this.orderRepo.save(order);
-
-    //publish diretamente numa fila
     await this.amqpConnection.publish('amq.direct', 'OrderCreated', {
       order_id: order.id,
-      // client_id: order.client_id,
       card_hash: createOrderDto.card_hash,
       total: order.total,
     });
+    //publish diretamente numa fila
     return order;
   }
 

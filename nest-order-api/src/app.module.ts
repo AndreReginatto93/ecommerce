@@ -18,7 +18,7 @@ import { RabbitmqModule } from './rabbitmq/rabbitmq.module';
       port: 3307,
       username: 'root',
       password: 'root',
-      database: 'ecommerce',
+      database: 'nest',
       entities: [Product, Order, OrderItem],
       synchronize: true,
       logging: true,
@@ -28,7 +28,7 @@ import { RabbitmqModule } from './rabbitmq/rabbitmq.module';
     AuthModule,
     RabbitmqModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController], //MVC  Model View Controller
   providers: [AppService],
 })
 export class AppModule {}
