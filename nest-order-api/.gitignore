@@ -1,9 +1,7 @@
-/go_catalog_API/.docker
-
 # compiled output
-/nest-order-api/dist
-/nest-order-api/node_modules
-/nest-order-api/build
+/dist
+/node_modules
+/build
 
 # Logs
 logs
@@ -18,11 +16,11 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
-/nest-order-api/coverage
-/nest-order-api/.nyc_output
+/coverage
+/.nyc_output
 
 # IDEs and editors
-/nest-order-api/.idea
+/.idea
 .project
 .classpath
 .c9/
