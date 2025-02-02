@@ -1,5 +1,3 @@
-# Imersão Full Stack & FullCycle - Ecommerce
-
 ## Descrição
 
 Repositório da API feita com Nest.js (api de ordens de compra)
@@ -28,8 +26,3 @@ npm run start:dev
 ```
 
 Existe um arquivo `api.http` na raiz do projeto que pode ser utilizado para testar a API via extensão `Rest Client` do VSCode.
-
----
-Tem dúvidas de como configurar seu ambiente de desenvolvimento? Veja o vídeo: [https://www.youtube.com/watch?v=O33trWxqVC4](https://www.youtube.com/watch?v=O33trWxqVC4)
----
-
